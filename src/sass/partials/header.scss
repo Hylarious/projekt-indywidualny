@@ -1,6 +1,6 @@
 header {
   height: 100vh;
-  background: url('../images/background.jpg') no-repeat;
+  background: url("../images/background.jpg") no-repeat;
   background-size: cover;
   background-blend-mode: darken, luminosity;
   background-attachment: fixed;
@@ -10,7 +10,7 @@ header {
 
 div.container {
   height: 100%;
-  background: linear-gradient(to bottom, rgba(19, 19, 19, 0)70%, rgba(19, 19, 19, 1)), ;
+  background: linear-gradient( to bottom, rgba(19, 19, 19, 0) 70%, rgba(19, 19, 19, 1));
 }
 
 .main-nav {
@@ -21,19 +21,21 @@ div.container {
   a {
     display: inline-block;
     margin: 50px 40px;
-    font-family: 'Source Sans Pro';
+    font-family: "Source Sans Pro";
     font-weight: 600;
     letter-spacing: 2px;
     padding: 10px 20px;
-    color: $color-light;
+    color: #fff;
     text-decoration: none;
     text-transform: uppercase;
   }
+ 
+
 }
 
 .title-container {
   text-transform: uppercase;
-  color: $color-light;
+  color: #fff;
   position: absolute;
   left: 50%;
   top: 300px;

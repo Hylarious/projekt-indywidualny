@@ -6,9 +6,18 @@
   padding: 0;
 }
 
+#pages>* {
+  display: none;
+}
+#pages>.active {
+  display: block;
+}
 body {
   margin: 0;
-  background-color: $color-dark;
-  height: 200vh;
+  background-color: #131313;
   font-family: 'Source Sans Pro';
+}
+p{
+  color:  white;
+  font-size: 50px;
 }
