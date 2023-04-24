@@ -1,48 +1,54 @@
 #path-finder {
-	height: 65vh;
+  height: 65vh;
 }
+
 .path-finder-container {
 
-	height: 65vh;
-	width: 65vh;
+  height: 65vh;
+  width: 65vh;
 	
-	display: flex;
-	flex-direction: column;
-	position: absolute;
-	top: 75vh;
-	left: 50%;
-	transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 75vh;
+  left: 50%;
+  transform: translateX(-50%);
 	
 }
 
 .row {
-	width: 100%;
-	height: 10%;
-	display: flex;
+  width: 100%;
+  height: 10%;
+  display: flex;
 }
+
 .row10{
-	height: calc(10% + 5px);
+  height: calc(10% + 5px);
 }
+
 .row10 .node {
-	box-sizing: border-box;
-	border-bottom: 5px solid white;
+  box-sizing: border-box;
+  border-bottom: 5px solid white;
 }
 
 .node {
 	
-	width: 10%;
-	height: 100%;
-	border-top: 5px solid white;
-	border-left: 5px solid white;
-	transition: 0.3s;
+  width: 10%;
+  height: 100%;
+  border-top: 5px solid white;
+  border-left: 5px solid white;
+  transition: 0.3s;
 }
+
 .node:hover{
-	transform: scale(1.05);	
+  transform: scale(1.05);	
 }
+
 .node:nth-last-child(1){
-	border-right: 5px solid white;
-	width: calc(10% + 5px)
+  border-right: 5px solid white;
+  width: calc(10% + 5px);
 }
+
 .node .clicked {
-background-color: #c24e00 ;
+  background-color: #c24e00 ;
 }

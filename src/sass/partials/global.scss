@@ -9,15 +9,14 @@
 #pages>* {
   display: none;
 }
+
 #pages>.active {
   display: block;
 }
+
 body {
+  color: white;
   margin: 0;
   background-color: #131313;
   font-family: 'Source Sans Pro';
-}
-p{
-  color:  white;
-  font-size: 50px;
 }

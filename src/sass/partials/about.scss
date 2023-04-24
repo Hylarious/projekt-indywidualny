@@ -1,0 +1,53 @@
+.about-text-container {
+  position: relative;
+}
+
+.hidden {
+  width: 80vw;
+  margin: 200px auto;
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: all 1s;
+}
+@media(prefers-reduced-motion){
+  .hidden{
+    transition: none;
+  }
+}
+
+.show{
+  opacity: 1;
+  transition: all 1s;
+  transform: translateX(0);
+}
+
+.plan{
+  margin-top: -400px;
+}
+
+.about :nth-child(2) img {
+  display: block;
+  margin-left: auto;
+}
+
+.text {
+  position: absolute;
+  font-size: 200%;
+  letter-spacing: 5px;
+
+  h3{
+    text-transform: uppercase;
+    line-height: 150%;
+		
+  }
+}
+
+.plan .text {
+  top: 65%;
+  left: 30%;
+}
+
+.minimalize .text {
+  top: 20%;
+  left: 10%;
+}

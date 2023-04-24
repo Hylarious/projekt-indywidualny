@@ -67,12 +67,30 @@ const app = {
       thisApp.pathFinderContainer.appendChild(row);
     }
   },
-  
+  initAnimationOnScroll: function(){
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((entry) => {
+        console.log(entry);
+        if (entry.isIntersecting){
+          entry.target.classList.add('show');
+        } else {
+          entry.target.classList.remove('show');
+        }
+      });
+    },
+    {
+      rootMargin: '-201px'
+    });
+    
+    const hiddenElements = document.querySelectorAll('.hidden');
+    hiddenElements.forEach((el) => observer.observe(el));
+  },
   init: function () {
     const thisApp = this;
 
     thisApp.initPages();
     thisApp.initGrid();
+    thisApp.initAnimationOnScroll();
   },
 };
 app.init();
