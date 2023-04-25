@@ -1,3 +1,5 @@
+import PathFinder from './PathFinder.js';
+
 const app = {
   initPages: function () {
     const thisApp = this;
@@ -37,7 +39,7 @@ const app = {
     // add class 'active' to matching pages, remove from non-matching
     for (let page of thisApp.pages) {
       page.classList.toggle('active', page.id == pageId);
-      console.log(page.id);
+      
     }
     // add class 'active' to matching links, remove from non-matching
     for (let link of thisApp.navLinks) {
@@ -52,25 +54,12 @@ const app = {
     thisApp.pathFinderContainer = document.querySelector(
       '.path-finder-container'
     );
-
-    for (let i = 0; i < 10; i++) {
-      let row = document.createElement('div');
-      row.className = 'row row' + (i+1);
-      row.id = 'row' +(i+1);
-      for(let j = 0; j<10; j++){
-        let  node = document.createElement('div');
-        node.className = 'node node' + ((i*10)+(j+1));
-        node.id = 'node' + ((i*10)+(j+1));
-
-        row.appendChild(node);
-      }
-      thisApp.pathFinderContainer.appendChild(row);
-    }
+    thisApp.pathFinder = new PathFinder(thisApp.pathFinderContainer);
+    
   },
   initAnimationOnScroll: function(){
     const observer = new IntersectionObserver(entries => {
       entries.forEach((entry) => {
-        console.log(entry);
         if (entry.isIntersecting){
           entry.target.classList.add('show');
         } else {

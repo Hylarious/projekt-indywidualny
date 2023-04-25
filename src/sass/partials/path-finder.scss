@@ -13,7 +13,6 @@
   top: 75vh;
   left: 50%;
   transform: translateX(-50%);
-	
 }
 
 .row {
@@ -26,7 +25,7 @@
   height: calc(10% + 5px);
 }
 
-.row10 .node {
+.row9 .node {
   box-sizing: border-box;
   border-bottom: 5px solid white;
 }
@@ -49,6 +48,7 @@
   width: calc(10% + 5px);
 }
 
-.node .clicked {
+.clicked {
   background-color: #c24e00 ;
 }
+
