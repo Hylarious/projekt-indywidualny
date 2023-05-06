@@ -1,18 +1,25 @@
 #path-finder {
-  height: 65vh;
+  height: 90vh;
 }
 
 .path-finder-container {
+ 
 
-  height: 65vh;
-  width: 65vh;
-	
-  display: flex;
-  flex-direction: column;
   position: absolute;
-  top: 75vh;
+  top: 60vh;
   left: 50%;
   transform: translateX(-50%);
+  text-align: center; 
+  font-size: 50px;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+}
+.grid{
+  margin: 100px 0;
+  height: 65vh;
+  width: 65vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .row {

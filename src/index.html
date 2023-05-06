@@ -48,15 +48,20 @@
             </div>
         </div>
         <div id="path-finder">
-        <div class="path-finder-container">
-
+            <div class="path-finder-container" >
+            </div>
         </div>
-        </div>
+    <script id="template-path-finder" type="text/x-handlebars-template">
+        <h1 class="pf-title">{{title}}</h1>
+        <div class="grid"></div>
+        <button class="pf-button" type="button">{{buttonText}}</button>
+    </script>
     </section>
     <footer>
         <p>All rights reserved</p>
     </footer>
     <script src="js/script.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
 </body>
 
 </html>

@@ -54,6 +54,7 @@ const app = {
     thisApp.pathFinderContainer = document.querySelector(
       '.path-finder-container'
     );
+    console.log( thisApp.pathFinderContainer );
     thisApp.pathFinder = new PathFinder(thisApp.pathFinderContainer);
     
   },
