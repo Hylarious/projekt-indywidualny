@@ -3,7 +3,8 @@ class PathFinder {
     const thisFinder = this;
 
     thisFinder.element = element;
-   
+    thisFinder.pathNodes = [];
+    thisFinder.startFinishNodes = [];
     thisFinder.step = 1;
 
     thisFinder.grid = {};
@@ -14,15 +15,14 @@ class PathFinder {
       }
     }
    
-    thisFinder.render();
+    thisFinder.render(thisFinder.grid);
     
   }
 
-  render(){
+  render(grid){
     const thisFinder = this;
 
     let pageData = null;
-   
 
     switch(thisFinder.step) {
     case 1:
@@ -51,20 +51,31 @@ class PathFinder {
         let  node = document.createElement('div');
         node.className = 'node node' + ((i*10)+(j));
         node.id = 'node' + ((i*10)+(j));
-        
+      
+        if(grid[i][j] == true){
+          node.className =  'node node' + ((i*10)+(j)) + ' clicked';
+        }
+
         row.appendChild(node);
       }
       thisFinder.element.querySelector('.grid').appendChild(row);
     }
-    thisFinder.initAction();
+
+    const nodes = document.querySelectorAll('.node');
     
+    for(let node of nodes){
+      let nodeId = node.getAttribute('id');
+      console.log(nodeId, thisFinder.pathNodes, thisFinder.startFinishNodes);
+      // if ()
+    }
+    thisFinder.initAction();
   }
 
   changeStep(newStep) {
     const thisFinder = this;
     thisFinder.step = newStep;
-    thisFinder.element.removeEventListener('click', thisFinder.drawPath);
-    thisFinder.render();
+    console.log(thisFinder.step);
+    thisFinder.render(thisFinder.grid);
     
   }
   
@@ -100,8 +111,7 @@ class PathFinder {
       const nodeId = link.getAttribute('id');
       const row = parseInt(link.parentNode.id.replace('row', ''));
       const col = parseInt(nodeId.slice(-1));
-      console.log(nodeId, row, col, thisFinder.grid);
-                   
+      
       if(thisFinder.pathNodes.length === 0 ){ 
         link.classList.add('clicked');
         thisFinder.pathNodes.push(nodeId);
@@ -114,7 +124,22 @@ class PathFinder {
         thisFinder.pathNodes.push(nodeId),
         thisFinder.grid[row][col] = true;
         addNeighbors(row, col);
-        console.log(thisFinder.pathNodes);
+      }
+    }
+  }
+
+  startFinish(event){
+    const thisFinder = this;
+    const link = event.target;
+    const nodeId = link.getAttribute('id');
+    
+    if(link.classList.contains('node') && thisFinder.pathNodes.includes(nodeId)){
+      if(thisFinder.startFinishNodes.length === 0){
+        link.classList.replace('clicked', 'start');
+        thisFinder.startFinishNodes.push(nodeId);
+      } else if(thisFinder.startFinishNodes.length === 1){
+        link.classList.replace('clicked', 'finish');
+        thisFinder.startFinishNodes.push(nodeId);
       }
     }
   }
@@ -124,18 +149,29 @@ class PathFinder {
 
     thisFinder.node = thisFinder.element.querySelectorAll('.node');
     thisFinder.button  = thisFinder.element.querySelector('.pf-button');
-    thisFinder.pathNodes = [];
     
+    const areaListener = new AbortController();
 
     if (thisFinder.step === 1){
-    
-      thisFinder.element.addEventListener('click', thisFinder.drawPath.bind(thisFinder));
-
+      thisFinder.element.addEventListener('click', thisFinder.drawPath.bind(thisFinder), {signal: areaListener.signal});
       thisFinder.button.addEventListener('click', function(event){
-        
         event.preventDefault();
         thisFinder.changeStep(2);
+        areaListener.abort();
       });
+    } 
+
+    if(thisFinder.step === 2){
+      thisFinder.element.addEventListener('click', thisFinder.startFinish.bind(thisFinder), {signal: areaListener.signal});
+      thisFinder.button.addEventListener('click', function(event){
+        event.preventDefault();
+        thisFinder.changeStep(3);
+        areaListener.abort();
+      });
+    }
+
+    if (thisFinder.step === 3){
+      console.log(thisFinder.pathNodes, thisFinder.startFinishNodes);
     }
   }
 }

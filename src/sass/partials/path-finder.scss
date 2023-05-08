@@ -3,7 +3,7 @@
 }
 
 .path-finder-container {
- position: absolute;
+  position: absolute;
   top: 60vh;
   left: 50%;
   transform: translateX(-50%);
@@ -59,6 +59,15 @@
 .clicked {
   background-color: #c24e00 ;
 }
+
+.start {
+  background-color: #2ecc71;
+}
+
+.finish {
+background-color: #e74c3c;
+}
+
 .pf-button {
   padding: 20px 40px;
   background-color: #c24e00;
@@ -67,5 +76,3 @@
   font-family: 'Source Sans Pro';
   color: white;
 }
-
-
