@@ -3,19 +3,20 @@
 }
 
 .path-finder-container {
- 
-
-  position: absolute;
+ position: absolute;
   top: 60vh;
   left: 50%;
   transform: translateX(-50%);
-  text-align: center; 
+  text-align: center;
   font-size: 50px;
   text-transform: uppercase;
   letter-spacing: 5px;
 }
+
 .grid{
-  margin: 100px 0;
+
+  position: relative;
+  margin: 100px auto;
   height: 65vh;
   width: 65vh;
   display: flex;
@@ -58,4 +59,13 @@
 .clicked {
   background-color: #c24e00 ;
 }
+.pf-button {
+  padding: 20px 40px;
+  background-color: #c24e00;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-family: 'Source Sans Pro';
+  color: white;
+}
+
 
