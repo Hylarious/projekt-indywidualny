@@ -1,9 +1,12 @@
+
+
 class PathFinder {
   constructor(element){
     const thisFinder = this;
 
     thisFinder.element = element;
     thisFinder.pathNodes = [];
+    thisFinder.path = [];
     thisFinder.startFinishNodes = [];
     thisFinder.step = 1;
 
@@ -52,21 +55,22 @@ class PathFinder {
         node.className = 'node node' + ((i*10)+(j));
         node.id = 'node' + ((i*10)+(j));
       
-        if(grid[i][j] == true){
+        switch(grid[i][j]){
+        case true:
           node.className =  'node node' + ((i*10)+(j)) + ' clicked';
+          break;
+        case 's':
+          node.className =  'node node' + ((i*10)+(j)) + ' start';
+          break;
+        case 'f':
+          node.className =  'node node' + ((i*10)+(j)) + ' finish';
+          break;
         }
 
         row.appendChild(node);
       }
       thisFinder.element.querySelector('.grid').appendChild(row);
-    }
-
-    const nodes = document.querySelectorAll('.node');
-    
-    for(let node of nodes){
-      let nodeId = node.getAttribute('id');
-      console.log(nodeId, thisFinder.pathNodes, thisFinder.startFinishNodes);
-      // if ()
+      
     }
     thisFinder.initAction();
   }
@@ -74,9 +78,7 @@ class PathFinder {
   changeStep(newStep) {
     const thisFinder = this;
     thisFinder.step = newStep;
-    console.log(thisFinder.step);
     thisFinder.render(thisFinder.grid);
-    
   }
   
   drawPath(event){
@@ -133,19 +135,111 @@ class PathFinder {
     const link = event.target;
     const nodeId = link.getAttribute('id');
     
+    
     if(link.classList.contains('node') && thisFinder.pathNodes.includes(nodeId)){
+      const row = parseInt(link.parentNode.id.replace('row', ''));
+      const col = parseInt(nodeId.slice(-1));
+
       if(thisFinder.startFinishNodes.length === 0){
         link.classList.replace('clicked', 'start');
-        thisFinder.startFinishNodes.push(nodeId);
+        thisFinder.startFinishNodes.push(nodeId); 
+        thisFinder.grid[row][col] = 's'; 
+
       } else if(thisFinder.startFinishNodes.length === 1){
         link.classList.replace('clicked', 'finish');
         thisFinder.startFinishNodes.push(nodeId);
+        thisFinder.grid[row][col] = 'f';
       }
     }
+   
+  }
+
+  findPath(start, finish){
+    const thisFinder = this;
+
+    const queue = [];
+    const parentForCell = {};
+
+    const finishRow = Math.floor(finish.replace('node', '') / 10);
+    const finishCol = parseInt(finish.slice(-1));
+     
+    const startRow = Math.floor(start.replace('node', '') / 10);
+    const startCol = parseInt(start.slice(-1));
+
+    
+    queue.push({row: startRow, col: startCol});
+   
+    while(queue.length > 0){
+      const { row, col } = queue.shift();
+      const currentKey = row + 'x' + col;
+
+      const neighbors = [
+        {row: row - 1, col},
+        {row, col: col + 1 },
+        {row: row + 1, col},
+        {row, col: col -1 }
+      ];
+
+      for (let i = 0; i < neighbors.length; ++i){
+
+        const nRow = neighbors[i].row;
+        const nCol = neighbors[i].col;
+
+        const gridLength =  Object.keys(thisFinder.grid).length;
+        if (nRow < 0 || nRow > gridLength - 1 ){
+          continue;
+        }
+
+        if (nCol < 0 || nCol > gridLength - 1 ){
+          continue;
+        }
+        
+        if (thisFinder.grid[nRow][nCol]==='n' || thisFinder.grid[nRow][nCol]===false){
+          continue;
+        }
+
+        const key = nRow + 'x' + nCol;
+
+        if (key in parentForCell){
+          continue;
+        }
+      
+        parentForCell[key] = {
+          key: currentKey,
+          node: 'node' + parseInt(row*10+col)
+        };
+        console.log(parentForCell);
+
+        queue.push(neighbors[i]);
+      }
+    }
+   
+    let currentKey = finishRow +'x'+ finishCol;
+
+    let current = finish;
+
+    console.log(currentKey, finish, parentForCell);
+    
+    while (current !== start){
+      thisFinder.path.push(current);
+      
+      const {key, node} = parentForCell[currentKey];
+      current = node;
+      currentKey = key;
+      
+    } 
+    for (let tile of thisFinder.pathNodes){
+      if (thisFinder.path.includes(tile)){
+        thisFinder.element.querySelector('.'+tile).classList.replace('clicked', 'path');
+
+      }
+    }
+    
   }
 
   initAction(){
     const thisFinder = this;
+    
 
     thisFinder.node = thisFinder.element.querySelectorAll('.node');
     thisFinder.button  = thisFinder.element.querySelector('.pf-button');
@@ -171,7 +265,28 @@ class PathFinder {
     }
 
     if (thisFinder.step === 3){
-      console.log(thisFinder.pathNodes, thisFinder.startFinishNodes);
+     
+      const start = thisFinder.startFinishNodes[0];
+      const finish = thisFinder.startFinishNodes[1];
+      thisFinder.findPath(start, finish);
+
+      thisFinder.button.addEventListener('click', function(event){
+        event.preventDefault();
+        thisFinder.pathNodes = [];
+        thisFinder.path = [];
+        thisFinder.startFinishNodes = [];
+          
+        console.log(thisFinder);
+
+        thisFinder.grid = {};
+        for(let row = 0; row <= 9; row++) {
+          thisFinder.grid[row] = {};
+          for(let col = 0; col <= 9; col++) {
+            thisFinder.grid[row][col] = false;
+          }
+        }
+        thisFinder.changeStep(1);
+      });
     }
   }
 }
