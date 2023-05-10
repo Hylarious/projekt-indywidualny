@@ -230,7 +230,7 @@ class PathFinder {
     } 
     for (let tile of thisFinder.pathNodes){
       if (thisFinder.path.includes(tile)){
-        thisFinder.element.querySelector('.'+tile).classList.replace('clicked', 'path');
+        thisFinder.element.querySelector('.'+tile).classList.add('start');
 
       }
     }
@@ -249,19 +249,25 @@ class PathFinder {
     if (thisFinder.step === 1){
       thisFinder.element.addEventListener('click', thisFinder.drawPath.bind(thisFinder), {signal: areaListener.signal});
       thisFinder.button.addEventListener('click', function(event){
-        event.preventDefault();
-        thisFinder.changeStep(2);
-        areaListener.abort();
+        if (thisFinder.pathNodes.length > 1){
+          event.preventDefault();
+          thisFinder.changeStep(2);
+          areaListener.abort();
+        }
       });
     } 
 
     if(thisFinder.step === 2){
       thisFinder.element.addEventListener('click', thisFinder.startFinish.bind(thisFinder), {signal: areaListener.signal});
+      console.log(thisFinder.startFinishNodes);
       thisFinder.button.addEventListener('click', function(event){
-        event.preventDefault();
-        thisFinder.changeStep(3);
-        areaListener.abort();
+        if (thisFinder.startFinishNodes.length == 2){
+          event.preventDefault();
+          thisFinder.changeStep(3);
+          areaListener.abort();
+        }
       });
+      
     }
 
     if (thisFinder.step === 3){
