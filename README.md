@@ -1,1 +1,1 @@
-[# projekt-indywidualny](https://projekt-indywidualny.hylarious.repl.co/#/about)
+[# SEE projekt-indywidualny in Vercel](https://projekt-indywidualny.vercel.app/#/path-finder)
